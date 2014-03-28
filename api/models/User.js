@@ -21,6 +21,14 @@ module.exports = {
   	encryptedPassword: {
   		type: 'string'
   	},
+    userType: {
+      type: 'string',
+      defaultsTo: "hungry"
+    },
+    online: {
+      type: 'boolean',
+      defaultsTo: false
+    },
   	toJSON: function(){
   	 	var obj = this.toObject();
   	 	delete obj.password;
@@ -39,9 +47,23 @@ module.exports = {
     require('bcryptjs').hash(values.password, 10, function passwordEncrypted(err, encryptedPassword) {
       if (err) return next(err);
       values.encryptedPassword = encryptedPassword;
-      //values.online = true;
+      values.online = true;
       next();
     });
   }
+  // ,
+  // beforeDestroy: function(values,next) {
+  //   //HACKY AS FUCKKK
+  //   sails.models.Order.find({userId: this.id}).done(function(err,orders) {
+  //     if(err) return console.log(err);
+
+  //     orders.forEach(function cascadeDelete(order){
+  //       sails.models.Order.destroy(order, function( err ){
+  //         if(err) return console.log(err);
+  //         sails.models.Order.publishDestroy(order);
+  //       });
+  //     });
+  //   });
+  // }
 
 };

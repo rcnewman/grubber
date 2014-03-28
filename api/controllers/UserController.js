@@ -20,17 +20,32 @@ module.exports = {
     	res.view();
     },
     create: function(req,res,next) {
-    	User.create( req.params.all() , function userCreated(err, user){
+        //Create userObj to prevent user adding extra fields
+        var userObj = {
+            name: req.param('name'),
+            email: req.param('email'),
+            password: req.param('password'),
+            confirmation: req.param('confirmation')
+        }
+
+    	User.create(userObj , function userCreated(err, user){
     		if (err) {
-    			console.log(err)
+    			//console.log(err)
     			req.session.flash = {
     				err: err.ValidationError
     			}
     			return res.redirect('/user/new');	
     		} 
 
-    		//res.json(user);
-    		res.redirect('/user/show/'+user.id);
+            req.session.authenticated = true;
+            req.session.User = user;
+            user.online = true;
+            user.save( function(err,user) {
+                if (err) return next(err);
+
+                User.publishCreate(user);
+                res.redirect('/user/show/'+user.id);
+            });
     	});
     },
     show: function (req,res,next) {
@@ -63,11 +78,25 @@ module.exports = {
     },
 
     update: function(req, res, next) {
-    	User.update(req.param('id'), req.params.all(), function userUpdated(err) {
+
+        if(req.session.User.userType == 'admin'){
+            var userObj = {
+                name: req.param('name'),
+                email: req.param('email'),
+                userType: req.param('userType')
+            }
+        } else {
+            var userObj = {
+                name: req.param('name'),
+                email: req.param('email')
+            }
+        }
+        
+    	User.update(req.param('id'), userObj, function userUpdated(err) {
     		if (err) {
     			return res.redirect('/user/edit/' + req.param('id'));
     		}
-
+            //User.publishUpdate(user);
     		res.redirect('/user/show/' + req.param('id'));
     	});
     },
@@ -79,10 +108,26 @@ module.exports = {
 
             User.destroy(req.param('id'),function userDestroyed(err) {
                 if (err) return next(err);
+                User.publishDestroy(user);
             });
 
             res.redirect('/user');
         });
-    }
+    },
 
+    subscribe: function(req, res) {
+
+        User.find(function foundUsers(err,users) {
+            //Subscribe to User Class room,
+            User.subscribe(req.socket);
+            //subscribe to instance room
+            User.subscribe(req.socket, users);
+            res.send(200);
+        });
+
+        // sails.models.Order.find({userId: this.id}, function foundOrders(err,orders) {
+        //     sails.models.Order.subscribe(req.socket);//todo: I think i delete this, need to test
+        //     sails.models.Order.subscribe(req.socket,orders);
+        // });
+    }
 };

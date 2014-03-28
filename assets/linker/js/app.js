@@ -13,23 +13,15 @@
   // as soon as this file is loaded, connect automatically, 
   var socket = io.connect();
   if (typeof console !== 'undefined') {
-    log('Connecting to Sails.js...');
+    log('Connecting to Grubber...');
   }
 
   socket.on('connect', function socketConnected() {
 
     // Listen for Comet messages from Sails
-    socket.on('message', function messageReceived(message) {
+    socket.on('message', cometMessageReceivedFromServer);
 
-      ///////////////////////////////////////////////////////////
-      // Replace the following with your own custom logic
-      // to run when a new message arrives from the Sails.js
-      // server.
-      ///////////////////////////////////////////////////////////
-      log('New comet message received :: ', message);
-      //////////////////////////////////////////////////////
-
-    });
+    socket.get('/user/subscribe');
 
 
     ///////////////////////////////////////////////////////////
@@ -69,3 +61,61 @@
   window.io
 
 );
+
+function cometMessageReceivedFromServer(message) {
+  console.log('Message received: ', message);
+
+  if(message.model === 'user') {
+    var userId = message.id;
+    updateUserInDom(userId, message);
+  }
+
+}
+
+function updateUserInDom(userId, message) {
+  var page = document.location.pathname;
+
+  page = page.replace(/(\/)$/, '');
+
+  switch(page) {
+    case '/user':
+      if (message.verb === 'update') {
+        UserIndexPage.updateUser(userId, message);
+      }
+      if (message.verb === 'create') {
+        UserIndexPage.addUser(message);
+      }
+      if (message.verb === 'destroy') {
+        UserIndexPage.destroyUser(userId);
+      }
+      break;
+  }
+
+}
+
+var UserIndexPage = {
+  updateUser: function(id, message) {
+    if(message.data.loggedIn){
+      var $userRow = $('tr[data-id="' + id + '"] td img').first();
+      $userRow.attr('src', "/images/icon-online.png");
+    } else {
+      var $userRow = $('tr[data-id="' + id + '"] td img').first();
+      $userRow.attr('src', "/images/icon-offline.png");
+    }
+  },
+  addUser: function(user) {
+    var obj = {
+      user: user.data,
+      _csrf: window.overlord.csrf || ''
+    };
+    
+    $('tr:last').after(
+      JST['assets/linker/templates/addUser.ejs']( obj )
+    );
+
+  },
+
+  destroyUser: function(id) {
+    $('tr[data-id="' + id + '"]').remove();
+  }
+}
