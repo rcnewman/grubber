@@ -21,7 +21,7 @@ module.exports.policies = {
   user: {
   	'new': "flash",
   	create: "flash",
-  	subscribe: ["flash","isAuthenticated"],
+  	subscribe: "flash",
   	'*': "isAuthenticated"
   }
   

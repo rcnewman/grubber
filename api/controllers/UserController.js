@@ -96,7 +96,7 @@ module.exports = {
     		if (err) {
     			return res.redirect('/user/edit/' + req.param('id'));
     		}
-            //User.publishUpdate(user);
+            User.publishUpdate(user);
     		res.redirect('/user/show/' + req.param('id'));
     	});
     },
@@ -105,10 +105,27 @@ module.exports = {
             if (err) return next(err);
 
             if(!user) return next('User doesn\'t exist.');
-
-            User.destroy(req.param('id'),function userDestroyed(err) {
+            
+            User.destroy(user.id,function userDestroyed(err) {
+                console.log('w3tf?')
                 if (err) return next(err);
-                User.publishDestroy(user);
+                console.log('w2tf?')
+                User.publishUpdate(user.id, {
+                    name: user.name
+                });
+                User.publishDestroy(user.id);
+
+                Order.find({userId: user.id},function (err,orders) {
+                    if (err) return next(err);
+                    if(!orders) return next('no orders found');
+
+                    orders.forEach(function cascadeDelete(order) {
+                        console.log(order + ' is being deleted');
+                        Order.destroy(order, function( err ){
+                            if (err) return next(err);
+                        });
+                    });
+                });
             });
 
             res.redirect('/user');
@@ -125,9 +142,9 @@ module.exports = {
             res.send(200);
         });
 
-        // sails.models.Order.find({userId: this.id}, function foundOrders(err,orders) {
-        //     sails.models.Order.subscribe(req.socket);//todo: I think i delete this, need to test
-        //     sails.models.Order.subscribe(req.socket,orders);
-        // });
+        Order.find({userId: this.id}, function foundOrders(err,orders) {
+            Order.subscribe(req.socket);//todo: I think i delete this, need to test
+            Order.subscribe(req.socket,orders);
+         });
     }
 };

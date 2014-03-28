@@ -1,0 +1,26 @@
+<form action="/order/create" method="POST" id="sign-up-form" class="form-signin">
+	<h2 class="form-signin-heading">Create an order</h2>
+
+	<% if(flash && flash.err) { %>
+		<ul class="alert alert-success">
+	<% Object.keys(flash.err).forEach(function(error) { %>
+		<li><%- JSON.stringify(flash.err[error]) %></li>
+		<% }) %>
+		</ul>
+	<% } %>
+
+	<div class="control-group">
+	<input type="text" class="form-control" placeholder="Restaurant" name="restaurant">
+	</div>
+
+	<div class="control-group">
+	<input type="text" class="form-control" placeholder="What Are You Ordering? " name="orderDescription">
+	</div>
+
+	<div class="control-group">
+	<input type="text" class="form-control" placeholder="How much will you pay" name="paymentAmount"
+	</div>
+
+	<input type="submit" class="btn btn-lg btn-primary btn-block" value = "Submit Order" />
+	<input type="hidden" name="_csrf" value="<%= _csrf %>" />
+</form>

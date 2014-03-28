@@ -28,7 +28,12 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="/"> Grubber</a>
+          <a class="navbar-brand" <% if(session.authenticated) { %>
+                href="/order"
+                <% } else { %>
+                href="/"
+                <% } %>
+              > Grubber</a>
         </div>
         <div class="navbar-collapse collapse">
           <ul class="nav navbar-nav">

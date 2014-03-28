@@ -19,13 +19,13 @@ module.exports = {
     	res.view();
     },
     create: function(req, res, next) {
-    	
+    	var now = new Date();
     	var orderObj = {
     		userId: req.session.User.id,
     		restaurant: req.param('restaurant'),
     		orderDescription: req.param('orderDescription'),
     		paymentAmount: req.param('paymentAmount'),
-    		orderTime: Date.now()
+    		orderTime: now
     	}
     	Order.create(orderObj, function orderCreated(err, order) {
     		if (err) {
@@ -35,15 +35,15 @@ module.exports = {
     			return res.redirect('/order/new');
     		}
 
-    		Order.publishCreate(order);
+    		//Order.publishCreate(order);
     		res.redirect('/order/show/' + order.id);
 
     	});
     },
     show: function(req,res,next) {
-    	Order.find(req.param('id'), function foundOrder(err, order) {
+    	Order.findOne(req.param('id'),function foundOrder(err, order) {
     		if (err) return next(err);
-    		if(!user) return next('Order does not exist');
+    		if(!order) return next('Order does not exist');
     		res.view({
     			order: order
     		});
@@ -58,6 +58,7 @@ module.exports = {
     		});
     	});
     },
+    //show that belong to user logged in
     orderHistory: function(req,res, next){
     	Order.find({userId: req.session.User.id}, function foundOrder(err,orders) {
     		if(err) return next(err);
@@ -84,9 +85,9 @@ module.exports = {
     	}
     	Order.update(req.param('id'), orderObj, function orderUpdate(err) {
     		if (err) {
-    			return res.redirect('/user/edit/' + req.param('id'));
+    			return res.redirect('/order/edit/' + req.param('id'));
     		}
-    		Order.publishUpdate(user);
+    		//Order.publishUpdate(user);
     		res.redirect('/order/show/' + req.param('id'));
     	});
     },
@@ -98,10 +99,10 @@ module.exports = {
 
     		Order.destroy(req.param('id'), function orderDestroyed(err) {
     			if (err) return next(err);
-    			Order.publishDestory(order);
+    			//Order.publishDestory(order);
     		});	
 
-    		res.redirect('/user');
+    		res.redirect('/order');
     	});
     }
  

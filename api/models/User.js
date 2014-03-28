@@ -51,19 +51,5 @@ module.exports = {
       next();
     });
   }
-  // ,
-  // beforeDestroy: function(values,next) {
-  //   //HACKY AS FUCKKK
-  //   sails.models.Order.find({userId: this.id}).done(function(err,orders) {
-  //     if(err) return console.log(err);
-
-  //     orders.forEach(function cascadeDelete(order){
-  //       sails.models.Order.destroy(order, function( err ){
-  //         if(err) return console.log(err);
-  //         sails.models.Order.publishDestroy(order);
-  //       });
-  //     });
-  //   });
-  // }
 
 };

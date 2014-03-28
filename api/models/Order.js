@@ -26,8 +26,7 @@ module.exports = {
 		required: true
 	},
 	orderTime: {
-		type: 'datetime',
-		required: true
+		type: 'datetime'
 	},
 	claimed: {
 		type: 'boolean',

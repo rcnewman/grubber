@@ -1,0 +1,36 @@
+<div class="container">
+	<h3><a href="/user">Users</a> | Orders</h3>
+	<table class = 'table'>
+		<tr>
+			<th>User ID</th>
+			<th>Order ID</th>
+			<th>Restaurant</th>
+			<th>Order Description</th>
+			<th>Payment Amount</th>
+			<th>Date of Order</th>
+			<th></th>
+			<th></th>
+		</tr>
+
+		<% _.each(orders,function(order) { %>
+		<tr data-id="<%= order.id %>" data-model="order">
+			<td><%= order.userId %></td>
+			<td><%= order.id %></td>
+			<td><%= order.restaurant %></td>
+			<td><%= order.orderDescription %></td>
+			<td><%= order.paymentAmount %></td>
+			<td><%= order.orderTime %></td>
+			<td><a href="/order/show/<%= order.id %>" class="btn btn-sm btn-primary" >Show</a></td>
+			<td><a href="/order/edit/<%= order.id %>" class="btn btn-sm btn-warning" >Edit</a></td>
+
+			<td><form action="/order/destroy/<%= order.id %>" method="POST">
+				<input type="hidden" name="_method" value="delete"/>
+				<input type="hidden" name="_csrf" value="<%= _csrf %>" />
+				<input type="submit" class="btn btn-sm btn-danger" value="Delete"/>
+			</form></td>
+
+			
+		</tr>
+		<% }) %>
+	</table>
+</div>
