@@ -26,11 +26,11 @@ module.exports.session = {
   // on localhost is expected.
   // Read more about options at: https://github.com/visionmedia/connect-redis
   //
-   host: 'barreleye.redistogo.com',
-   port: 11336,
+   host: process.env.REDIS_HOST,
+   port: process.env.REDIS_PORT,
    //ttl: <redis session TTL in seconds>,
-   db: 'redistogo',
-   pass: '39b58b37e9f3e89db4da659f9b2820d6'
+   db: process.env.REDIS_DB,
+   pass: process.env.REDIS_PASS
   // prefix: 'sess:'
 
 
