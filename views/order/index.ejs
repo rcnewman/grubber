@@ -8,6 +8,9 @@
 			<th>Order Description</th>
 			<th>Payment Amount</th>
 			<th>Date of Order</th>
+			<th>Claimed</th>
+			<th></th>
+			<th></th>
 			<th></th>
 			<th></th>
 		</tr>
@@ -20,9 +23,15 @@
 			<td><%= order.orderDescription %></td>
 			<td><%= order.paymentAmount %></td>
 			<td><%= order.orderTime %></td>
+			<td><%= order.claimed %></td>
 			<td><a href="/order/show/<%= order.id %>" class="btn btn-sm btn-primary" >Show</a></td>
 			<td><a href="/order/edit/<%= order.id %>" class="btn btn-sm btn-warning" >Edit</a></td>
-
+			<td><form action="/claim/create" method="POST">
+				<input type="hidden" name="orderId" value="<%= order.id %>" />
+				<input type="hidden" name="userId" value="<%=order.userId %>" />
+				<input type="hidden" name="_csrf" value="<%- _csrf %>" />
+				<input type="submit" class="btn btn-sm btn-primary" value="Claim"></form></td>
+				
 			<td><form action="/order/destroy/<%= order.id %>" method="POST">
 				<input type="hidden" name="_method" value="delete"/>
 				<input type="hidden" name="_csrf" value="<%= _csrf %>" />

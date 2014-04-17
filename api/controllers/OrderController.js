@@ -51,7 +51,8 @@ module.exports = {
     },
     //For claimers
     index: function(req, res, next) {
-    	Order.find({claimed: false},function foundOrder(err, orders) {
+    	Order.find(//{claimed: false},
+            function foundOrder(err, orders) {
     		if(err) return next(err);
     		res.view({
     			orders: orders

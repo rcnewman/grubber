@@ -21,7 +21,12 @@ module.exports.policies = {
   user: {
   	'new': "flash",
   	create: "flash",
-  	subscribe: "flash",
+  	subscribe: "flash",	
+  	'*': "isAuthenticated"
+  },
+  order: {
+  	index: ["flash","isAuthenticated","delivery"],
+  	'new': ["flash","isAuthenticated","hungry"],
   	'*': "isAuthenticated"
   }
   

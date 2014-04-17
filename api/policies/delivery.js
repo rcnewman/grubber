@@ -12,7 +12,7 @@ module.exports = function(req, res, next) {
 		req.session.flash = {
 			err: requireDeliveryError
 		}
-		res.redirect('/session/new');
+		res.redirect('/order/new');
 		return;
 	}
 };
