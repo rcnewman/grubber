@@ -4,19 +4,31 @@
   "version": "0.0.0",
   "description": "a Sails application",
   "dependencies": {
-    "sails": "0.9.13",
-    "grunt": "0.4.1",
+    "sails": "^0.9.13",
+    "grunt": "^0.4.1",
     "sails-disk": "~0.9.0",
-    "ejs": "0.8.4",
-    "optimist": "0.3.4",
-    "sails-mongo": "*"
+    "ejs": "^0.8.4",
+    "optimist": "^0.3.4",
+    "sails-mongo": "^0.10.0-rc3",
+    "node-foursquare-venues": "^0.2.2",
+    "redis": "^0.10.1",
+    "bcryptjs": "^0.7.12",
+    "semaphore": "^1.0.1"
   },
   "scripts": {
     "start": "node app.js",
     "debug": "node debug app.js"
   },
   "main": "app.js",
-  "repository": "",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/rcnewman/grubber.git"
+  },
   "author": "",
-  "license": ""
+  "license": "ISC",
+  "devDependencies": {},
+  "bugs": {
+    "url": "https://github.com/rcnewman/grubber/issues"
+  },
+  "homepage": "https://github.com/rcnewman/grubber"
 }

@@ -18,14 +18,9 @@ module.exports.adapters = {
   // in a model definition, 'default' will be used.
   'default': 'mongo',
 
-  mongo: {
-    module: 'sails-mongo',
-    host: 'localhost',
-    user: '',
-    // Psst.. You can put your password in config/local.js instead
-    // so you don't inadvertently push it up if you're using version control
-    password: '', 
-    database: 'mydb',
-    schema: true
-  }
+    mongo: {
+      module  : 'sails-mongo',
+      url: process.env.DB_URL
+      
+    }
 };
