@@ -68,7 +68,7 @@ module.exports.sockets = {
    port: process.env.REDIS_PORT,
    //ttl: <redis session TTL in seconds>,
    db: process.env.REDIS_DB,
-   pass: process.env.REDIS_PASS
+   pass: process.env.REDIS_PASS,
   // Worth mentioning is that, if `adapter` config is `redis`, 
   // but host/port is left unset, Sails will try to connect to redis 
   // running on localhost via port 6379 
