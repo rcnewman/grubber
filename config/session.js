@@ -20,17 +20,17 @@ module.exports.session = {
 
   // In production, uncomment the following lines to set up a shared redis session store
   // that can be shared across multiple Sails.js servers
-  // adapter: 'redis',
+   adapter: 'redis',
   //
   // The following values are optional, if no options are set a redis instance running
   // on localhost is expected.
   // Read more about options at: https://github.com/visionmedia/connect-redis
   //
-  // host: 'localhost',
-  // port: 6379,
-  // ttl: <redis session TTL in seconds>,
-  // db: 0,
-  // pass: <redis auth password>
+   host: 'barreleye.redistogo.com',
+   port: 11336,
+   //ttl: <redis session TTL in seconds>,
+   db: 'redistogo',
+   pass: '39b58b37e9f3e89db4da659f9b2820d6'
   // prefix: 'sess:'
 
 
