@@ -15,16 +15,15 @@ module.exports = {
 			}
 			
 			var restaurantsList = [];
+
 			(data.response.venues).forEach( function(venue,index) 
 			{ 
-				foursquare.venues.menu(venue.id, function(err, data) {
-					console.log(venue.name + " Menu: " + JSON.stringify(data.response.menu.menus,null,1));
-						});
+				console.log(venue);
 			});
 
 
 
-			return res.view({data: data});
+			return res.view(data.response.venues);
 		}
 		);
 		

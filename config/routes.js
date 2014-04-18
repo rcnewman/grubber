@@ -35,7 +35,7 @@ module.exports.routes = {
   '/': {
     view: 'static/index'
   },
-  '/foursquare': {
+  '/foursquare/restaurants': {
     controller: 'FoursquareController',
     action: 'restaurants'
   }
