@@ -18,12 +18,12 @@ module.exports = {
 
 			(data.response.venues).forEach( function(venue,index) 
 			{ 
-				console.log(venue);
+				console.log(venues);
 			});
 
 
 
-			return res.view(data.response.venues);
+			return res.view({ data: data.response.venues });
 		}
 		);
 		
