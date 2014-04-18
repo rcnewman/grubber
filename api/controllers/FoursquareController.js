@@ -18,7 +18,7 @@ module.exports = {
 
 			(data.response.venues).forEach( function(venue,index) 
 			{ 
-				console.log(venues);
+				console.log(venue);
 			});
 
 
