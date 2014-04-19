@@ -21,3 +21,26 @@ $(document).ready(function(){
 		}
 	});
 });
+
+$("#restaurant").autocomplete({
+		source: function( request, response ) {
+			$.ajax({
+				datatype: "json",
+				type: "GET",
+				url: "/foursquare/restaurants/",
+				success: function(data) {
+					response($.map(data , function (value, key) {
+						return (key === 'id' ? {id: value} : null);
+					}));
+				},
+				error: function(data) {
+					$("#restaurant").val("ERROR");
+				}
+			});
+		},
+		select: function( event , ui ) {
+
+		},
+		minLength: 0
+
+	});

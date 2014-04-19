@@ -13,17 +13,8 @@ module.exports = {
 			if(err) {
 				res.send(500);
 			}
+
 			
-			var restaurantsList = [];
-
-			(data.response.venues).forEach( function(venue,index) 
-			{ 
-				console.log(venue);
-			});
-
-
-
-			return res.view({ data: data.response.venues });
 		}
 		);
 		
