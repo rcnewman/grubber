@@ -20,9 +20,9 @@ $(document).ready(function(){
 			element.text('OK!').addClass('valid')
 		}
 	});
-});
 
-$("#restaurant").autocomplete({
+
+	$("#restaurant").autocomplete({
 		source: function( request, response ) {
 			$.ajax({
 				datatype: "json",
@@ -44,3 +44,4 @@ $("#restaurant").autocomplete({
 		minLength: 0
 
 	});
+});
