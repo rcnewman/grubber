@@ -29,11 +29,13 @@ $(document).ready(function(){
 				type: "GET",
 				url: "/foursquare/restaurants/",
 				success: function(data) {
+					console.log('data received: ' + data);
 					response($.map(data , function (value, key) {
 						return (key === 'id' ? {id: value} : null);
 					}));
 				},
 				error: function(data) {
+					console.log('error');
 					$("#restaurant").val("ERROR");
 				}
 			});
