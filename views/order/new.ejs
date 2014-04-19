@@ -34,8 +34,8 @@
 				type: "GET",
 				url: "/foursquare/restaurants/",
 				success: function(data) {
-					response($.map(data , function (item) {
-						return ()
+					response($.map(data , function (value, key) {
+						return (key === 'id' ? {id: value} : null);
 					}));
 				},
 				error: function(data) {
