@@ -57,7 +57,7 @@ module.exports = function (grunt) {
     'linker/js/jquery.min.js',
     'linker/js/jquery.validate.min.js',
     'linker/js/app.js',
-
+    'linker/js/jquery-ui-1.10.4.custom.min.js'
     // *->    put other dependencies here   <-*
     // All of the rest of your app scripts imported here
     'linker/**/*.js'
