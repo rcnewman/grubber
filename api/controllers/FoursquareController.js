@@ -14,9 +14,10 @@ module.exports = {
 				res.send(500);
 			}
 			
-		
-
-			return data.response.venues;
+			
+			console.log((data.response.venues).map(function(current) {
+				return {id: current.id, name: current.name };
+			}));
 		}
 		);
 		

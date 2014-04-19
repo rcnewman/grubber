@@ -43,7 +43,7 @@ $(document).ready(function(){
 		select: function( event , ui ) {
 
 		},
-		minLength: 0
+		minLength: 1
 
 	});
 });
