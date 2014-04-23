@@ -48,6 +48,8 @@ module.exports = {
       if (err) return next(err);
       values.encryptedPassword = encryptedPassword;
       values.online = true;
+      values.password = undefined;
+      values.confirmation = undefined;
       next();
     });
   }

@@ -21,10 +21,6 @@ module.exports = {
 		type: 'STRING',
 		required: true
 	},
-	paymentAmount: {
-		type: 'FLOAT', //Validate proper dollar amounts on front end
-		required: true
-	},
 	orderTime: {
 		type: 'datetime',
 		required: true

@@ -2,7 +2,7 @@
   "name": "Grubber",
   "private": true,
   "version": "0.0.0",
-  "description": "a Sails application",
+  "description": "Are you hungry?",
   "dependencies": {
     "sails": "0.9.13",
     "grunt": "^0.4.1",

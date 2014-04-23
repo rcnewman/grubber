@@ -24,7 +24,6 @@ module.exports = {
     		userId: req.session.User.id,
     		restaurant: req.param('restaurant'),
     		orderDescription: req.param('orderDescription'),
-    		paymentAmount: req.param('paymentAmount'),
     		orderTime: now
     	}
     	Order.create(orderObj, function orderCreated(err, order) {

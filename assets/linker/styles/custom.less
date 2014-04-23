@@ -19,6 +19,8 @@ body {
 
 .jumbotron {
 	text-align: center;
+	background-image: url('../../images/waffles.jpg');
+	background-size: cover;
 }
 
 .jumbotron h2 {
@@ -27,7 +29,12 @@ body {
 	margin-bottom: 30px;
 	text-align: center;
 	font-weight: normal;
-	color: gray;
+	background-color: rgba(200,200,200,0.7);
+	color: @black;
+}
+.jumbotron p {
+	background-color: rgba(200,200,200,0.7);
+	color: @black;
 }
 .container .gray {
 	color: gray;
@@ -58,4 +65,11 @@ body {
 	height: auto;
 	margin-bottom: 15px;
 	padding: 7px 9px;
+}
+.ui-autocomplete{
+	background-color: @lightGray;
+	border: 1px solid @gray;
+	-webkit-border-radius: 15px;
+	-moz-border-radius: 15px;
+	border-radius:15px;
 }

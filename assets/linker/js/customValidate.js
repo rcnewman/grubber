@@ -21,29 +21,52 @@ $(document).ready(function(){
 		}
 	});
 
+	$("#order").attr('disabled',true);
 
 	$("#restaurant").autocomplete({
-		source: function( request, response ) {
+		source: function( req, res ) {
 			$.ajax({
-				datatype: "json",
 				type: "GET",
 				url: "/foursquare/restaurants/",
 				success: function(data) {
-					console.log('data received: ' + data);
-					response($.map(data , function (value, key) {
-						return (key === 'id' ? {id: value} : null);
-					}));
+					results = jQuery.parseJSON( data.replace('\\','') );
+					results = results.filter(function(elem){
+						return (elem['value'].toLowerCase().indexOf(req.term.toLowerCase()) > -1);
+					});
+					res( results );
 				},
 				error: function(data) {
-					console.log('error');
-					$("#restaurant").val("ERROR");
+					res("error");
 				}
 			});
 		},
 		select: function( event , ui ) {
-
+			$("#order").attr('disabled',false);
+			secondary_url = "/foursquare/menus?venueId=" + ui.item.venueId;
+			$("#order").autocomplete("option", "source", function( req, res ) {
+					$.ajax({
+					type: "GET",
+					url: secondary_url,
+					success: function(data) {
+						results = jQuery.parseJSON( data.replace('\\','') );
+						results = results.filter(function(elem){
+							return (elem['value'].toLowerCase().indexOf(req.term.toLowerCase()) > -1);
+						});
+						res( results );
+					},
+					error: function(data) {
+						res("error");
+					}
+				});
+			});
 		},
 		minLength: 1
 
 	});
+
+	$("#order").autocomplete({
+		source: "",
+		minLength: 1
+	});
+
 });
