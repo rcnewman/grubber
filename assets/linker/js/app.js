@@ -91,7 +91,7 @@ function cometMessageReceivedFromServer(message) {
 //       break;
 //   }
 
-}
+//}
 
 // var UserIndexPage = {
 //   updateUser: function(id, message) {
