@@ -46,8 +46,6 @@ module.exports = {
 				next();
 			}
 			if(typeof result !== "undefined"){
-				//if(result.TTL) implement TTL later
-
 				res.send('[' + result.results + ']');
 			} else {
 				foursquare.venues.menu(req.param('venueId'), function(err,data) {
@@ -76,4 +74,3 @@ module.exports = {
 		});
 	}
 };
-

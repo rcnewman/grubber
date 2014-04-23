@@ -6,7 +6,6 @@
 			<th>Order ID</th>
 			<th>Restaurant</th>
 			<th>Order Description</th>
-			<th>Payment Amount</th>
 			<th>Date of Order</th>
 			<th>Claimed</th>
 			<th></th>
@@ -21,9 +20,12 @@
 			<td><%= order.id %></td>
 			<td><%= order.restaurant %></td>
 			<td><%= order.orderDescription %></td>
-			<td><%= order.paymentAmount %></td>
 			<td><%= order.orderTime %></td>
-			<td><%= order.claimed %></td>
+			<% if(order.claimed) { %>
+				<td><img src="/images/icon-online.png"></td>
+			<% } else { %>
+				<td><img src="/images/icon-offline.png"</td>
+			<% } %>
 			<td><a href="/order/show/<%= order.id %>" class="btn btn-sm btn-primary" >Show</a></td>
 			<td><a href="/order/edit/<%= order.id %>" class="btn btn-sm btn-warning" >Edit</a></td>
 			<td><form action="/claim/create" method="POST">
