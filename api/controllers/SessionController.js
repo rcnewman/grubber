@@ -65,11 +65,11 @@ module.exports = {
 					});
 
 					if(req.session.User.userType == 'hungry'){
-						res.redirect('/user');
+						res.redirect('/order/new');
 						//res.redirect('/request'); todo: implement delivery request form
 						return;
 					} else if (req.session.User.userType == 'delivery') {
-						res.redirect('/user');
+						res.redirect('/order');
 						//res.redirect('/claim'); todo: implement claim acquire form
 						return;
 					} else if(req.session.User.userType == 'admin') {
