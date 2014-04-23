@@ -52,7 +52,7 @@ module.exports = {
 			} else {
 				foursquare.venues.menu(req.param('venueId'), function(err,data) {
 					if(err) { res.send(500);}
-					
+					if(data.response.menu.menus.items[0].entries.items[1].entries.items)
 					 var a = (data.response.menu.menus.items[0].entries.items[1].entries.items).map(function(current) {
 					 	return JSON.stringify({value: current.name });
 					 });
