@@ -67,55 +67,55 @@ function cometMessageReceivedFromServer(message) {
 
   if(message.model === 'user') {
     var userId = message.id;
-    updateUserInDom(userId, message);
+    //updateUserInDom(userId, message);
   }
 
 }
 
-function updateUserInDom(userId, message) {
-  var page = document.location.pathname;
+// function updateUserInDom(userId, message) {
+//   var page = document.location.pathname;
 
-  page = page.replace(/(\/)$/, '');
+//   page = page.replace(/(\/)$/, '');
 
-  switch(page) {
-    case '/user':
-      if (message.verb === 'update') {
-        UserIndexPage.updateUser(userId, message);
-      }
-      if (message.verb === 'create') {
-        UserIndexPage.addUser(message);
-      }
-      if (message.verb === 'destroy') {
-        UserIndexPage.destroyUser(userId);
-      }
-      break;
-  }
+//   switch(page) {
+//     case '/user':
+//       if (message.verb === 'update') {
+//         UserIndexPage.updateUser(userId, message);
+//       }
+//       if (message.verb === 'create') {
+//         UserIndexPage.addUser(message);
+//       }
+//       if (message.verb === 'destroy') {
+//         UserIndexPage.destroyUser(userId);
+//       }
+//       break;
+//   }
 
 }
 
-var UserIndexPage = {
-  updateUser: function(id, message) {
-    if(message.data.loggedIn){
-      var $userRow = $('tr[data-id="' + id + '"] td img').first();
-      $userRow.attr('src', "/images/icon-online.png");
-    } else {
-      var $userRow = $('tr[data-id="' + id + '"] td img').first();
-      $userRow.attr('src', "/images/icon-offline.png");
-    }
-  },
-  addUser: function(user) {
-    var obj = {
-      user: user.data,
-      _csrf: window.overlord.csrf || ''
-    };
+// var UserIndexPage = {
+//   updateUser: function(id, message) {
+//     if(message.data.loggedIn){
+//       var $userRow = $('tr[data-id="' + id + '"] td img').first();
+//       $userRow.attr('src', "/images/icon-online.png");
+//     } else {
+//       var $userRow = $('tr[data-id="' + id + '"] td img').first();
+//       $userRow.attr('src', "/images/icon-offline.png");
+//     }
+//   },
+//   addUser: function(user) {
+//     var obj = {
+//       user: user.data,
+//       _csrf: window.overlord.csrf || ''
+//     };
     
-    $('tr:last').after(
-      JST['assets/linker/templates/addUser.ejs']( obj )
-    );
+//     $('tr:last').after(
+//       JST['assets/linker/templates/addUser.ejs']( obj )
+//     );
 
-  },
+//   },
 
-  destroyUser: function(id) {
-    $('tr[data-id="' + id + '"]').remove();
-  }
-}
+//   destroyUser: function(id) {
+//     $('tr[data-id="' + id + '"]').remove();
+//   }
+// }
