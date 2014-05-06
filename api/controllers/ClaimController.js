@@ -29,7 +29,12 @@ module.exports = {
             Order.findOne(utils.escape(req.param('orderId')),function foundOrder(err, order){
                 if(err) {sem.leave(); return next(err); }
                 if(!order) {sem.leave(); return next('Order does not exist');}
-                if(order.claimed === true) {sem.leave(); return next('Order has been claimed');}
+                if(order.claimed === true) {
+                    sem.leave();
+                    var orderClaimedError = [{name: 'orderClaimedError', message: 'Order has alreadty been claimed.'}];
+                     req.session.flash = { err: orderClaimedError };
+                     return res.redirect('/order/index');
+                 }
 
                 Claim.create(claimObj, function claimCreated(err, claim){
                     if (err) {

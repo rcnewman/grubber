@@ -1,5 +1,13 @@
 <div class="container">
 	<h3><% if (session.User.userType == "admin") { %><a href="/user">Users</a> | <% } %>Orders</h3>
+	<% if(flash && flash.err) { %>
+		<ul class="alert alert-success">
+	<% Object.keys(flash.err).forEach(function(error) { %>
+		<li><%- flash.err[error].name %></li>
+		<li><%- flash.err[error].message %></li>
+		<% }) %>
+		</ul>
+	<% } %>
 	<table class = 'table'>
 		<tr>
 			<th>User ID</th>
