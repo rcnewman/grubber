@@ -102,7 +102,7 @@ module.exports = {
     			//Order.publishDestory(order);
     		});	
 
-    		res.redirect('/order');
+    		res.redirect('/order/history');
     	});
     }
  

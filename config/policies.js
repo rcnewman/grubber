@@ -30,6 +30,7 @@ module.exports.policies = {
   	index: ["flash","isAuthenticated","isDelivery"],
   	'new': ["flash","isAuthenticated","isHungry"],
   	show: ["flash","isAuthenticated","ownsOrder"],
+    destroy: ["flash","isAuthenticated","ownsOrder"],
   	'*': "isAuthenticated"
   },
   claim: {
