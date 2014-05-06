@@ -40,7 +40,7 @@ module.exports = {
     	});
     },
     show: function(req,res,next) {
-    	Order.findOne(req.param('id'),function foundOrder(err, order) {
+    	Order.findOne( utils.escape(req.param('id')),function foundOrder(err, order) {
     		if (err) return next(err);
     		if(!order) return next('Order does not exist');
     		res.view({
@@ -68,7 +68,7 @@ module.exports = {
     	});
     },
     edit: function(req, res, next) {
-    	Order.findOne(req.param('id'), function foundOrder(err,order) {
+    	Order.findOne( utils.escape(req.param('id')), function foundOrder(err,order) {
     		if (err) return next(err);
     		if(!order) return next('Order does not exist');
 
@@ -79,11 +79,11 @@ module.exports = {
     },
     update: function(req, res, next) {
     	var orderObj = {
-    		restaurant: req.param('restaurant'),
-    		orderDescription: req.param('orderDescription'),
-    		paymentAmount: req.param('paymentAmount'),
+    		restaurant:  utils.escape(req.param('restaurant')),
+    		orderDescription:  utils.escape(req.param('orderDescription')),
+    		paymentAmount:  utils.escape(req.param('paymentAmount')),
     	}
-    	Order.update(req.param('id'), orderObj, function orderUpdate(err) {
+    	Order.update( utils.escape(req.param('id')) , orderObj, function orderUpdate(err) {
     		if (err) {
     			return res.redirect('/order/edit/' + req.param('id'));
     		}
@@ -92,12 +92,12 @@ module.exports = {
     	});
     },
     destroy: function (req, res, next) {
-    	Order.findOne( req.param('id'), function foundOrder(err, order) {
+    	Order.findOne(  utils.escape(req.param('id')), function foundOrder(err, order) {
     		if (err) return next(err);
 
     		if(!order) return next('Order does not exist');
 
-    		Order.destroy(req.param('id'), function orderDestroyed(err) {
+    		Order.destroy( utils.escape(req.param('id')), function orderDestroyed(err) {
     			if (err) return next(err);
     			//Order.publishDestory(order);
     		});	
