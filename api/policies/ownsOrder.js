@@ -3,17 +3,20 @@
  */
 
 module.exports = function(req, res, next) {
-	if(req.session.User && (req.session.User.id == req.param('userId') || req.session.User.userType == 'admin' || req.session.User.userType == 'delivery'))
-	{
-		return next();
-	}
-
-	else {
-		var requireOwnerError = [{name: 'requireOwnerError', message: 'You do not own this order.'}]
-		req.session.flash = {
-			err: requireOwnerError
+	Order.findOne(req.param('id'),function foundOrder(err, order) {
+		if (err) return res.redirect('/');
+    	if(!order) return res.redirect('/');
+    	if(req.session.User && (req.session.User.id == order.userId || req.session.User.userType == 'admin' || req.session.User.userType == 'delivery'))
+		{
+			return next();
 		}
-		res.redirect('/');
-		return;
-	}
+		else {
+			var requireOwnerError = [{name: 'requireOwnerError', message: 'You do not own this order.'}]
+			req.session.flash = {
+				err: requireOwnerError
+			}
+			res.redirect('/');
+			return;
+		}
+	});
 };

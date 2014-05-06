@@ -3,17 +3,20 @@
  */
 
 module.exports = function(req, res, next) {
-	if(req.session.User && (req.session.User.id == req.param('deliveryUserId') || req.session.User.id == req.param('hungryUserId')  || req.session.User.userType == 'admin'))
-	{
-		return next();
-	}
-
-	else {
-		var requireOwnerError = [{name: 'requireOwnerError', message: 'You do not own this claim.'}]
-		req.session.flash = {
-			err: requireOwnerError
+	Claim.findOne(req.param('id'),function foundClaim(err, claim) {
+		if (err) return res.redirect('/');
+    	if(!claim) return res.redirect('/');
+    	if(req.session.User && (req.session.User.id == claim.deliveryUserId || req.session.User.id == claim.hungryUserId  || req.session.User.userType == 'admin'))
+		{
+			return next();
 		}
-		res.redirect('/');
-		return;
-	}
+		else {
+			var requireOwnerError = [{name: 'requireOwnerError', message: 'You do not own this claim.'}]
+			req.session.flash = {
+				err: requireOwnerError
+			}	
+			res.redirect('/');
+			return;
+		}
+	});
 };
