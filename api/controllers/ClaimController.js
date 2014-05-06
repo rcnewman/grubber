@@ -16,10 +16,7 @@
  */
 var sem = require('semaphore')(1);
 module.exports = {
-
-	//OH GAWD RACE CONDITIONS TODO: HATE SELF
-	//RACE CONDITIONS!!!!! TODO: PUNCH WALLS
-	//RACE CONDITIONS!!!!!! TODO: Delete internet
+    //Race conditions without semaphore... maybe node wasnt the best option for this
     create: function(req, res, next) {
         sem.take(function() {
             var now = new Date();
@@ -30,7 +27,7 @@ module.exports = {
                 claimedTime: now        
             }
             Order.findOne(req.param('orderId'),function foundOrder(err, order){
-                if (err) {sem.leave(); return next(err); }
+                if(err) {sem.leave(); return next(err); }
                 if(!order) {sem.leave(); return next('Order does not exist');}
                 if(order.claimed === true) {sem.leave(); return next('Order has been claimed');}
 
@@ -56,6 +53,14 @@ module.exports = {
                     sem.leave();
                     return res.redirect('/order/index');
                 } );
+            });
+        });
+    },
+    history: function(req,res, next){
+        Claim.find({deliveryUserId: req.session.User.id}, function foundClaim(err,claims) {
+            if(err) return next(err);
+            res.view({
+                claims: claims
             });
         });
     }

@@ -27,21 +27,12 @@
 				<td><img src="/images/icon-online.png"</td>
 			<% } %>
 			<td><a href="/order/show/<%= order.id %>" class="btn btn-sm btn-primary" >Show</a></td>
-			<% if (session.User.userType == "admin") { %>
-			<td><a href="/order/edit/<%= order.id %>" class="btn btn-sm btn-warning" >Edit</a></td><% } %>
-			<td><form action="/claim/create" method="POST">
-				<input type="hidden" name="orderId" value="<%= order.id %>" />
-				<input type="hidden" name="userId" value="<%=order.userId %>" />
-				<input type="hidden" name="_csrf" value="<%- _csrf %>" />
-				<input type="submit" class="btn btn-sm btn-primary" value="Claim"></form></td>
-			<% if (session.User.userType == "admin") { %>
+			<td><a href="/order/edit/<%= order.id %>" class="btn btn-sm btn-warning" >Edit</a></td>
 			<td><form action="/order/destroy/<%= order.id %>" method="POST">
 				<input type="hidden" name="_method" value="delete"/>
 				<input type="hidden" name="_csrf" value="<%= _csrf %>" />
 				<input type="submit" class="btn btn-sm btn-danger" value="Delete"/>
-			</form></td><% } %>
-
-			
+			</form></td>			
 		</tr>
 		<% }) %>
 	</table>

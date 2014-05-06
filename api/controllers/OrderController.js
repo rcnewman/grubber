@@ -59,7 +59,7 @@ module.exports = {
     	});
     },
     //show that belong to user logged in
-    orderHistory: function(req,res, next){
+    history: function(req,res, next){
     	Order.find({userId: req.session.User.id}, function foundOrder(err,orders) {
     		if(err) return next(err);
     		res.view({

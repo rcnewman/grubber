@@ -22,11 +22,19 @@ module.exports.policies = {
   	'new': "flash",
   	create: "flash",
   	subscribe: "flash",	
-  	'*': "isAuthenticated"
+  	show: ["isAuthenticated","ownsAccount"],
+  	index: ["isAuthenticated","isAdmin"],
+  	'*': "isAuthenticated",
   },
   order: {
-  	index: ["flash","isAuthenticated","delivery"],
-  	'new': ["flash","isAuthenticated","hungry"],
+  	index: ["flash","isAuthenticated","isDelivery"],
+  	'new': ["flash","isAuthenticated","isHungry"],
+  	show: ["flash","isAuthenticated","ownsOrder"],
+  	'*': "isAuthenticated"
+  },
+  claim: {
+  	create: ["isAuthenticated","isDelivery"],
+  	show: ["isAuthenticated","ownsClaim"],
   	'*': "isAuthenticated"
   }
   

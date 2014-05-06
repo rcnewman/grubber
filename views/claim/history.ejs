@@ -1,0 +1,31 @@
+<div class="container">
+	<h3><% if (session.User.userType == "admin") { %><a href="/user">Users</a> | <% } %>Claims</h3>
+	<table class = 'table'>
+		<tr>
+			<th>Delivery User ID</th>
+			<th>Hungry User ID</th>
+			<th>Order ID</th>
+			<th>Claimed Time</th>
+			<th></th>
+			<th></th>
+			<th></th>
+			<th></th>
+			<th></th>
+			<th></th>
+		</tr>
+
+		<% _.each(claims,function(claim) { %>
+		<tr data-id="<%= claim.id %>" data-model="claim">
+			<td><%= claim.deliveryUserId %></td>
+			<td><%= claim.hungryUserId %></td>
+			<td><%= claim.orderId %></td>
+			<td><%= claim.claimedTime %></td>
+			<td><form action="/claim/destroy/<%= claim.id %>" method="POST">
+				<input type="hidden" name="_method" value="delete"/>
+				<input type="hidden" name="_csrf" value="<%= _csrf %>" />
+				<input type="submit" class="btn btn-sm btn-danger" value="Delete"/>
+			</form></td>			
+		</tr>
+		<% }) %>
+	</table>
+</div>

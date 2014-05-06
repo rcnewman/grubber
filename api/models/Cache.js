@@ -3,7 +3,6 @@
  *
  * @module      :: Model
  * @description :: To cache results from API
- * @docs		:: http://sailsjs.org/#!documentation/models
  */
 
 module.exports = {

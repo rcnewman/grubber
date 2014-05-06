@@ -1,5 +1,5 @@
 <div class="container">
-	<h3>Users | <a href="/order">Orders</a></h3>
+	<h3><% if (session.User.userType == "admin") { %>Users | <% } %><a href="/order">Orders</a></h3>
 	<table class = 'table'>
 		<tr>
 			<th>Online Status</th>
