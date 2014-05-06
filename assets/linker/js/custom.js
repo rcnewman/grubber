@@ -56,7 +56,7 @@ $(document).ready(function(){
 				type: "GET",
 				url: "/foursquare/restaurants/",
 				success: function(data) {
-					results = jQuery.parseJSON( data.replace('\\','') );
+					results = jQuery.parseJSON( data);
 					results = results.filter(function(elem){
 						if(elem.hasOwnProperty('value')){
 							return (elem['value'].toLowerCase().indexOf(req.term.toLowerCase()) > -1);
@@ -79,7 +79,7 @@ $(document).ready(function(){
 					type: "GET",
 					url: secondary_url,
 					success: function(data) {
-						results = jQuery.parseJSON( data.replace('\\','') );
+						results = jQuery.parseJSON( data );
 						results = results.filter(function(elem){
 						if(elem.hasOwnProperty('value')){
 							return (elem['value'].toLowerCase().indexOf(req.term.toLowerCase()) > -1);
