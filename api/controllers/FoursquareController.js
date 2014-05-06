@@ -61,7 +61,7 @@ module.exports = {
 										a.push.apply(a, (category.entries.items).map(function(current) 
 											{ 
 												return JSON.stringify(
-													{value: current.name.replace('"',''), category: category.name.replace('"',''), desc: current.description.replace('"','')}); 
+													{value: current.name.replace('"',''), category: category.name.replace('"',''), desc: (current.hasOwnProperty('description') ? current.description.replace('"','') : "" ) }); 
 											})
 										);
 									} else {
