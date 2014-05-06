@@ -30,7 +30,7 @@ module.exports = {
 			res.redirect('/session/new');
 			return;
 		}
-		User.findOneByEmail(req.param('email'), function foundUser (err,user) {
+		User.findOneByEmail(utils.escape(req.param('email')), function foundUser (err,user) {
 			if(err) return next(err);
 
 			if(!user) {
@@ -41,7 +41,7 @@ module.exports = {
 				res.redirect('/session/new');
 				return;
 			}
-			require('bcryptjs').compare(req.param('password'), user.encryptedPassword, function(err,valid) {
+			require('bcryptjs').compare(utils.escape(req.param('password')), user.encryptedPassword, function(err,valid) {
 				if(err) return next(err);
 				if(!valid) {
 					var invalidPasswordError = [{name: 'invalidPassword', message: 'The password you entered was not correct'}];
@@ -66,11 +66,9 @@ module.exports = {
 
 					if(req.session.User.userType == 'hungry'){
 						res.redirect('/order/new');
-						//res.redirect('/request'); todo: implement delivery request form
 						return;
 					} else if (req.session.User.userType == 'delivery') {
 						res.redirect('/order');
-						//res.redirect('/claim'); todo: implement claim acquire form
 						return;
 					} else if(req.session.User.userType == 'admin') {
 						res.redirect('/user/show/' + user.id);

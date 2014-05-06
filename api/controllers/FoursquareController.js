@@ -41,14 +41,14 @@ module.exports = {
 		},
 		menus: function (req, res, next){
 			var foursquare = require('node-foursquare-venues')('Y4MMAW13TD5N0ZBNMNBFLMUBP3BURS3YO1UQWRZHIS0ZMNLD','FPJRT2JZGKVET3TD4NJJLHW3I3LJSMONYRKUTGNLOCGZXTHU');
-			Cache.findOne({ key: req.param('venueId') }).done(function(err, result) {
+			Cache.findOne({ key: utils.escape(req.param('venueId')) }).done(function(err, result) {
 				if(err) {
 					next();
 				}
 				if(typeof result !== "undefined"){
 					res.send('[' + result.results + ']');
 				} else {
-					foursquare.venues.menu(req.param('venueId'), function(err,data) {
+					foursquare.venues.menu( utils.escape(req.param('venueId')), function(err,data) {
 						if(err) { res.send(500);}
 						
 						var a = [];
@@ -76,7 +76,7 @@ module.exports = {
 						}
 						
 						Cache.create({
-							key: req.param('venueId'),
+							key: utils.escape(req.param('venueId')),
 						 	results: a,
 						 	timeRetrieved: new Date(),
 						 	TTL: 36000000

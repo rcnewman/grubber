@@ -21,12 +21,12 @@ module.exports = {
         sem.take(function() {
             var now = new Date();
             var claimObj = {
-                deliveryUserId: req.session.User.id,
-                hungryUserId: req.param('userId'),
-                orderId: req.param('orderId'),
+                deliveryUserId: utils.escape(req.session.User.id),
+                hungryUserId: utils.escape(req.param('userId')),
+                orderId: utils.escape(req.param('orderId')),
                 claimedTime: now        
             }
-            Order.findOne(req.param('orderId'),function foundOrder(err, order){
+            Order.findOne(utils.escape(req.param('orderId')),function foundOrder(err, order){
                 if(err) {sem.leave(); return next(err); }
                 if(!order) {sem.leave(); return next('Order does not exist');}
                 if(order.claimed === true) {sem.leave(); return next('Order has been claimed');}

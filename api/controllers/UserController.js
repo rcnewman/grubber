@@ -28,10 +28,10 @@ module.exports = {
         
         //Create userObj to prevent user adding extra field
         var userObj = {
-            name: req.param('name'),
-            email: req.param('email'),
-            password: req.param('password'),
-            confirmation: req.param('confirmation'),
+            name: utils.escape(req.param('name')),
+            email: utils.escape(req.param('email')),
+            password: utils.escape(req.param('password')),
+            confirmation: utils.escape(req.param('confirmation')),
             userType: userType
         }
 
@@ -56,7 +56,7 @@ module.exports = {
     	});
     },
     show: function (req,res,next) {
-    	User.findOne(req.param('id'), function foundUser (err, user) {
+    	User.findOne(utils.escape(req.param('id')), function foundUser (err, user) {
     		if (err) return next(err);
     		if (!user) return next('User doesn\'t exist.');
     		res.view({
@@ -74,7 +74,7 @@ module.exports = {
     },
 
     edit: function(req, res, next) {
-    	User.findOne(req.param('id'),function foundUser(err, user) {
+    	User.findOne(utils.escape(req.param('id')),function foundUser(err, user) {
     		if (err) return next(err);
     		if (!user) return next('User doesn\'t exist.');
 
@@ -88,18 +88,18 @@ module.exports = {
 
         if(req.session.User.userType == 'admin'){
             var userObj = {
-                name: req.param('name'),
-                email: req.param('email'),
-                userType: req.param('userType')
+                name: utils.escape(req.param('name')),
+                email: utils.escape(req.param('email')),
+                userType: utils.escape(req.param('userType'))
             }
         } else {
             var userObj = {
-                name: req.param('name'),
-                email: req.param('email')
+                name: utils.escape(req.param('name')),
+                email: utils.escape(req.param('email'))
             }
         }
         
-    	User.update(req.param('id'), userObj, function userUpdated(err) {
+    	User.update(utils.escape(req.param('id')), userObj, function userUpdated(err) {
     		if (err) {
     			return res.redirect('/user/edit/' + req.param('id'));
     		}
@@ -108,15 +108,13 @@ module.exports = {
     	});
     },
     destroy: function (req, res, next) {
-        User.findOne( req.param('id'), function foundUser(err, user) {
+        User.findOne( utils.escape(req.param('id')), function foundUser(err, user) {
             if (err) return next(err);
 
             if(!user) return next('User doesn\'t exist.');
             
             User.destroy(user.id,function userDestroyed(err) {
-                console.log('w3tf?')
                 if (err) return next(err);
-                console.log('w2tf?')
                 User.publishUpdate(user.id, {
                     name: user.name
                 });

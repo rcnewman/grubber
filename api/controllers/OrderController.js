@@ -21,9 +21,9 @@ module.exports = {
     create: function(req, res, next) {
     	var now = new Date();
     	var orderObj = {
-    		userId: req.session.User.id,
-    		restaurant: req.param('restaurant'),
-    		orderDescription: req.param('orderDescription'),
+    		userId: utils.escape(req.session.User.id),
+    		restaurant: utils.escape(req.param('restaurant')),
+    		orderDescription: utils.escape(req.param('orderDescription')),
     		orderTime: now
     	}
     	Order.create(orderObj, function orderCreated(err, order) {
